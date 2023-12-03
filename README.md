@@ -31,7 +31,9 @@ pip install -e .
 
 ## Usage
 
-To use AutoRank-LLM, you'll need to write a Python script or open a Python shell. Here's a simple example:
+To use AutoRank-LLM, you'll need to write a Python script or open a Python shell. 
+
+Here's a simple example:
 ```python
 from autorank_llm.evaluator import LLMEvaluator
 
@@ -49,6 +51,8 @@ evaluator.evaluate_llms()
 rankings = evaluator.get_rankings()
 print(rankings)
 ```
+
+Only [Ollama models](https://ollama.ai/library) are supported for now.
 
 ### Testing
 
