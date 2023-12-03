@@ -37,7 +37,7 @@ from autorank_llm.evaluator import LLMEvaluator
 
 # Define the model names and the task
 model_names = ["mistral:instruct", "orca-mini", "llama2"]
-task = "Generate a creative story based on a given prompt."
+task = "3 names of a pet cow."
 
 # Create an evaluator instance
 evaluator = LLMEvaluator(model_names, task)
@@ -48,6 +48,13 @@ evaluator.evaluate_llms()
 # Retrieve and display the rankings
 rankings = evaluator.get_rankings()
 print(rankings)
+```
+
+### Testing
+
+Run unit tests on the package:-  
+```sh
+python -m unittest discover tests 
 ```
 
 ## Contributing
