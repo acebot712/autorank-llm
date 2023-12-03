@@ -78,7 +78,7 @@ Please ensure your contributions adhere to the following guidelines:
 
 ## License
 
-AutoRank-LLM is released under the [MIT License](https://opensource.org/license/mit/). Please review the license for more details.
+AutoRank-LLM is released under the [Apache License 2.0](https://github.com/acebot712/autorank-llm/blob/main/LICENSE). Please review the license for more details.
 
 ## Acknowledgments
 
