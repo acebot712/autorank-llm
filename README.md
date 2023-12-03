@@ -1,43 +1,78 @@
 # AutoRank-LLM
-Creating a self-stabilizing, fully automated system to evaluate and rank a group of Language Learning Models (LLMs) without human intervention is a complex and intriguing challenge. The key is to design a system where each LLM contributes to the evaluation process, and their influence in this process is adjusted based on their demonstrated abilities. Here’s an out-of-the-box approach:
 
-### Concept: Recursive Peer Review System with Adaptive Weighting
+AutoRank-LLM is an innovative Python package designed to automatically evaluate and rank Language Learning Models (LLMs) without human intervention. It utilizes a recursive peer review system with adaptive weighting to provide a fair and dynamic ranking of LLMs based on their performance on language understanding and generation tasks.
 
-1. **Initial Setup**:
-   - Start with a group of LLMs, each with an initial arbitrary ranking or skill level, perhaps randomly assigned.
+## Features
 
-2. **Evaluation Rounds**:
-   - In each round, every LLM evaluates the performance of other LLMs. This could be based on specific tasks or questions designed to test various aspects of language understanding and generation.
-   - The evaluations are scored, for example, based on coherence, relevance, or creativity of the responses.
+- **Recursive Evaluation**: LLMs evaluate each other in multiple rounds to establish a performance-based ranking.
+- **Adaptive Weighting**: Evaluations are weighted by the evaluator's current ranking to ensure that more skilled LLMs have a greater influence.
+- **Dynamic Adjustment**: Rankings are updated after each round based on weighted evaluations, allowing for gradual stabilization of the system.
+- **Normalization and Scaling**: Techniques applied to prevent score inflation/deflation and maintain a consistent ranking scale.
+- **Machine Learning Integration**: Potential for continuous learning and refinement of the system based on evaluation outcomes.
 
-3. **Weighted Scoring**:
-   - Each LLM’s evaluation of its peers is weighted based on its own current ranking. Higher-ranked LLMs have more influence in evaluating others.
+## Installation
 
-4. **Dynamic Adjustment**:
-   - After each round of evaluations, update each LLM’s ranking based on the weighted scores it received.
-   - This step is crucial: The adjustment should be moderate to avoid large swings in rankings and to allow the system to gradually stabilize.
+To install AutoRank-LLM, follow these steps:
 
-5. **Feedback Loop**:
-   - Incorporate a feedback loop where the system learns which characteristics of evaluations correlate with more effective and consistent ranking outcomes. This could involve machine learning models analyzing patterns in the evaluations and outcomes over multiple rounds.
+1. Ensure you have Python 3.6 or higher installed.
+2. Clone the repository or download the source code.
+3. Navigate to the root directory of the project.
+4. Install the package with pip:
 
-6. **Normalization and Scaling**:
-   - Apply normalization techniques to prevent score inflation or deflation over time.
-   - Ensure the ranking scale remains consistent across iterations.
+```bash
+pip install .
+```
 
-7. **Convergence Criteria**:
-   - Define a convergence criterion to determine when the system has stabilized. This could be based on the rate of change in rankings slowing down to a certain threshold.
+Or, for a development installation:
 
-### Potential Machine Learning Integration:
+```bash
+pip install -e .
+```
 
-- **Model Training**: Use a machine learning model to analyze past evaluation data and adjust the weight each LLM’s evaluation carries in future rounds. The model would identify patterns in which evaluations lead to stable and consistent rankings.
-- **Continuous Learning**: Allow the system to continuously adapt and refine its weighting strategy based on ongoing evaluation outcomes.
+## Usage
 
-### Challenges and Considerations:
+To use AutoRank-LLM, you'll need to write a Python script or open a Python shell. Here's a simple example:
+```python
+from autorank_llm.evaluator import LLMEvaluator
 
-- **Complexity**: This system is complex and would require careful design, especially in crafting the evaluation tasks and interpreting the results.
-- **Bias and Echo Chambers**: There's a risk of creating echo chambers where certain types of evaluations are unduly favored. Regular adjustments and checks for such biases are necessary.
-- **Computationally Intensive**: This approach could be computationally intensive, requiring significant resources for numerous evaluation rounds and data analysis.
+# Define the model names and the task
+model_names = ["mistral:instruct", "orca-mini", "llama2"]
+task = "Generate a creative story based on a given prompt."
 
-### Conclusion:
+# Create an evaluator instance
+evaluator = LLMEvaluator(model_names, task)
 
-This system represents a novel approach to evaluating LLMs in a self-contained and automated manner. While challenging and resource-intensive, it offers a way to dynamically rank LLMs based on their own evaluations of each other, adapting and refining its process over time through a recursive, feedback-driven mechanism.
+# Perform the evaluation
+evaluator.evaluate_llms()
+
+# Retrieve and display the rankings
+rankings = evaluator.get_rankings()
+print(rankings)
+```
+
+## Contributing
+
+Contributions to AutoRank-LLM are welcome and greatly appreciated. Here's how you can contribute:
+
+1. **Report Issues**: If you find a bug or have a suggestion for improving the package, please open an issue.
+2. **Submit Pull Requests**: Feel free to fork the repository and submit pull requests. Whether it's fixing a bug, adding a feature, or improving documentation, your help is valuable.
+3. **Feedback**: Your feedback is crucial to the ongoing improvement of AutoRank-LLM. Share your experiences and ideas for future development.
+
+Please ensure your contributions adhere to the following guidelines:
+
+- Write clear and concise commit messages.
+- Make sure your code follows the PEP 8 style guide for Python code.
+- Update the documentation to reflect any changes in the API or functionality.
+- Add tests for new features to ensure they work as expected.
+
+## License
+
+AutoRank-LLM is released under the [MIT License](https://opensource.org/license/mit/). Please review the license for more details.
+
+## Acknowledgments
+
+AutoRank-LLM was inspired by the need for a fair and unbiased system to evaluate the burgeoning number of Language Learning Models in the field. We are grateful to the open-source community for their contributions and support.
+
+## Conclusion
+
+AutoRank-LLM offers a robust and scalable solution to the challenge of evaluating and ranking LLMs. By leveraging the collective assessment capabilities of LLMs themselves, it provides a unique approach to understanding and benchmarking language model performance.
