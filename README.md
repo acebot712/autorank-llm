@@ -4,10 +4,14 @@ AutoRank-LLM is an innovative Python package designed to automatically evaluate 
 
 ## Features
 
+- **Model-Agnostic Multi-Backend Support**: Evaluate LLMs from Ollama, OpenAI, HuggingFace, and more via a unified interface.
 - **Recursive Evaluation**: LLMs evaluate each other in multiple rounds to establish a performance-based ranking.
 - **Adaptive Weighting**: Evaluations are weighted by the evaluator's current ranking to ensure that more skilled LLMs have a greater influence.
 - **Dynamic Adjustment**: Rankings are updated after each round based on weighted evaluations, allowing for gradual stabilization of the system.
-- **Normalization and Scaling**: Techniques applied to prevent score inflation/deflation and maintain a consistent ranking scale.
+- **Explainable and Auditable Rankings**: Every evaluation and ranking decision is logged for transparency and can be visualized or reported.
+- **Robustness, Bias, and Fairness Analysis**: Hooks for automated analysis of model robustness and fairness (extensible for custom checks).
+- **Plugin-Based Evaluation Tasks**: Easily add new evaluation tasks or metrics via a plugin system.
+- **Scalable and Distributed Evaluation (Pluggable)**: Architecture ready for distributed and parallel evaluation.
 - **Machine Learning Integration**: Potential for continuous learning and refinement of the system based on evaluation outcomes.
 
 ## Installation
@@ -33,26 +37,56 @@ pip install -e .
 
 To use AutoRank-LLM, you'll need to write a Python script or open a Python shell. 
 
-Here's a simple example:
+Here's a simple example with multi-backend support:
 ```python
-from autorank_llm.evaluator import LLMEvaluator
+from autorank_llm import LLMEvaluator
 
-# Define the model names and the task
-model_names = ["mistral:instruct", "orca-mini", "llama2"]
+# Define the model configs (name, model_name, backend)
+model_configs = [
+    {"name": "mistral", "model_name": "mistral:instruct", "backend": "ollama"},
+    {"name": "orca-mini", "model_name": "orca-mini", "backend": "ollama"},
+    {"name": "llama2", "model_name": "llama2", "backend": "ollama"},
+    # Example for OpenAI or HuggingFace:
+    # {"name": "gpt-3.5", "model_name": "gpt-3.5-turbo", "backend": "openai"},
+    # {"name": "hf-llama", "model_name": "meta-llama/Llama-2-7b-hf", "backend": "huggingface"},
+]
 task = "3 names of a pet cow."
 
-# Create an evaluator instance
-evaluator = LLMEvaluator(model_names, task)
-
-# Perform the evaluation
-evaluator.evaluate_llms()
+evaluator = LLMEvaluator(model_configs, task)
+results = evaluator.evaluate_llms()
 
 # Retrieve and display the rankings
-rankings = evaluator.get_rankings()
-print(rankings)
-```
+rankings = results['rankings']
+for i, llm in enumerate(rankings, 1):
+    print(f"Rank {i}: {llm.name} (Skill: {llm.skill_level:.2f})")
 
-Only [Ollama models](https://ollama.ai/library) are supported for now.
+# Explainability report
+from autorank_llm import explainability_report
+print(explainability_report(results['explainability_log']))
+
+# Register a plugin for custom evaluation tasks or metrics
+class MyCustomPlugin:
+    def run(self, *args, **kwargs):
+        # Custom logic here
+        return {'custom_metric': 42}
+
+evaluator.register_plugin(MyCustomPlugin())
+plugin_results = evaluator.run_plugins()
+print("Plugin results:", plugin_results)
+
+# Enable distributed evaluation (stub)
+evaluator.enable_distributed(cluster_config={"nodes": 4})
+
+# Get data for web dashboard or API
+dashboard_data = evaluator.get_dashboard_data()
+print("Dashboard data:", dashboard_data)
+
+# Automated challenge/task generation (stub)
+from autorank_llm import generate_challenges
+challenges = generate_challenges(evaluator.llms[0], num_challenges=3, topic="math reasoning")
+print("Generated challenges:", challenges)
+
+# The architecture is extensible for web dashboards, research APIs, and adversarial/diverse task generation.
 
 ### Testing
 

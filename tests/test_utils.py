@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import Mock
-from autorank_llm.utils import normalize_skill_levels, rank_llms
+from autorank_llm.utils import normalize_skill_levels, rank_llms, explainability_report, check_bias_and_fairness, check_robustness
 
 class TestUtils(unittest.TestCase):
 
@@ -40,6 +40,25 @@ class TestUtils(unittest.TestCase):
         self.llm3.skill_level = 90
         expected_ranking = [self.llm3, self.llm2, self.llm1]
         self.assertEqual(rank_llms(self.llms), expected_ranking)
+
+    def test_explainability_report(self):
+        logs = [
+            {'iteration': 1, 'evaluator': 'A', 'evaluatee': 'B', 'task': 'foo', 'response': 'bar', 'score': 7, 'weighted_score': 70},
+            {'iteration': 2, 'evaluator': 'B', 'evaluatee': 'A', 'task': 'foo', 'response': 'baz', 'score': 8, 'weighted_score': 80},
+        ]
+        report = explainability_report(logs)
+        self.assertIn('Explainability Report:', report)
+        self.assertIn('Iteration 1: A evaluated B', report)
+        self.assertIn('Iteration 2: B evaluated A', report)
+
+    def test_check_bias_and_fairness(self):
+        result = check_bias_and_fairness(self.llms, [])
+        self.assertIn('bias', result)
+        self.assertIn('fairness', result)
+
+    def test_check_robustness(self):
+        result = check_robustness(self.llms, [])
+        self.assertIn('robustness', result)
 
     def tearDown(self):
         # Clean up after each test method
