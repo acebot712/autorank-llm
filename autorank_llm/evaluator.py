@@ -73,8 +73,6 @@ class LLMEvaluator:
         self.llms: List[LLM] = [LLM(cfg['name'], cfg['model_name'], cfg.get('backend', 'ollama')) for cfg in model_configs]
         self.logger: EvaluationLogger = EvaluationLogger()
         self.plugin_manager: PluginManager = PluginManager()
-        self.distributed: bool = False
-        self.cluster_config: Optional[Dict[str, Any]] = None
 
     def evaluate_llms(self) -> Dict[str, Any]:
         """
@@ -143,9 +141,16 @@ class LLMEvaluator:
         return self.plugin_manager.run(*args, **kwargs)
 
     def enable_distributed(self, cluster_config: Optional[Dict[str, Any]] = None) -> None:
-        self.distributed = True
-        self.cluster_config = cluster_config
-        # TODO: Implement distributed evaluation logic
+        """
+        Enable distributed evaluation (future feature).
+
+        :param cluster_config: Configuration for distributed cluster
+        :raises NotImplementedError: This feature is not yet implemented
+        """
+        raise NotImplementedError(
+            "Distributed evaluation is planned for a future release. "
+            "Follow https://github.com/acebot712/autorank-llm for updates."
+        )
 
     def get_dashboard_data(self) -> Dict[str, Any]:
         logs = self.logger.get_logs()

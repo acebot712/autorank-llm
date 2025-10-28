@@ -54,31 +54,43 @@ def explainability_report(logs: List[Dict[str, Any]]) -> str:
 
 def check_bias_and_fairness(llms: List[Any], logs: List[Dict[str, Any]]) -> Dict[str, str]:
     """
-    Stub for bias and fairness analysis.
+    Bias and fairness analysis (future feature).
+
     :param llms: List of LLM instances.
     :param logs: List of evaluation logs.
     :return: Dict with bias/fairness metrics.
+    :raises NotImplementedError: This feature is not yet implemented
     """
-    # TODO: Implement real bias/fairness checks
-    return {'bias': 'Not implemented', 'fairness': 'Not implemented'}
+    raise NotImplementedError(
+        "Bias and fairness analysis is planned for a future release. "
+        "Follow https://github.com/acebot712/autorank-llm for updates."
+    )
 
 def check_robustness(llms: List[Any], logs: List[Dict[str, Any]]) -> Dict[str, str]:
     """
-    Stub for robustness analysis.
+    Robustness analysis (future feature).
+
     :param llms: List of LLM instances.
     :param logs: List of evaluation logs.
     :return: Dict with robustness metrics.
+    :raises NotImplementedError: This feature is not yet implemented
     """
-    # TODO: Implement real robustness checks
-    return {'robustness': 'Not implemented'}
+    raise NotImplementedError(
+        "Robustness analysis is planned for a future release. "
+        "Follow https://github.com/acebot712/autorank-llm for updates."
+    )
 
 def generate_challenges(llm: Any, num_challenges: int = 5, topic: str = "general") -> List[str]:
     """
-    Stub for automated challenge/task generation using an LLM.
+    Automated challenge/task generation (future feature).
+
     :param llm: An LLM instance to generate tasks.
     :param num_challenges: Number of challenges to generate.
     :param topic: Topic or domain for the challenges.
     :return: List of generated challenge strings.
+    :raises NotImplementedError: This feature is not yet implemented
     """
-    # TODO: Implement real LLM-based challenge generation
-    return [f"Challenge {i+1} for topic '{topic}'" for i in range(num_challenges)]
+    raise NotImplementedError(
+        "Automated challenge generation is planned for a future release. "
+        "Follow https://github.com/acebot712/autorank-llm for updates."
+    )

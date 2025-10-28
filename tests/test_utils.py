@@ -52,13 +52,12 @@ class TestUtils(unittest.TestCase):
         self.assertIn('Iteration 2: B evaluated A', report)
 
     def test_check_bias_and_fairness(self):
-        result = check_bias_and_fairness(self.llms, [])
-        self.assertIn('bias', result)
-        self.assertIn('fairness', result)
+        with self.assertRaises(NotImplementedError):
+            check_bias_and_fairness(self.llms, [])
 
     def test_check_robustness(self):
-        result = check_robustness(self.llms, [])
-        self.assertIn('robustness', result)
+        with self.assertRaises(NotImplementedError):
+            check_robustness(self.llms, [])
 
     def tearDown(self):
         # Clean up after each test method

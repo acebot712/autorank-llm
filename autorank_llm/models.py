@@ -5,15 +5,15 @@ from typing import Dict, Callable, Optional
 
 # Backend imports (import only if available)
 try:
-    from langchain.llms import Ollama
+    from langchain_community.llms import Ollama
 except ImportError:
     Ollama = None
 try:
-    from langchain.llms import OpenAI
+    from langchain_openai import OpenAI
 except ImportError:
     OpenAI = None
 try:
-    from langchain.llms import HuggingFaceHub
+    from langchain_huggingface import HuggingFaceHub
 except ImportError:
     HuggingFaceHub = None
 
@@ -87,11 +87,17 @@ class LLM:
     Language Learning Model abstraction supporting multiple backends.
     Handles only model interface and task execution.
     """
-    def __init__(self, name: str, model_name: str, backend: str = 'ollama') -> None:
+    def __init__(
+        self,
+        name: str,
+        model_name: str,
+        backend: str = 'ollama'
+    ) -> None:
         """
         :param name: The name of the LLM instance.
         :param model_name: The model name for the LLM instance.
-        :param backend: The backend to use (e.g., 'ollama', 'openai', 'huggingface').
+        :param backend: The backend to use (e.g., 'ollama', 'openai',
+            'huggingface').
         :raises ValueError: If any input is invalid.
         """
         if not name or not isinstance(name, str):
