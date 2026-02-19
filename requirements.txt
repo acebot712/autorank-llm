@@ -5,3 +5,4 @@ langchain-core>=0.1.52
 # Optional dependencies (users should install what they need)
 # For OpenAI: pip install langchain-openai
 # For HuggingFace: pip install langchain-huggingface
+promptguard-sdk
