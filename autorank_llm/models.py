@@ -1,3 +1,8 @@
+import os
+import promptguard
+
+promptguard.init(api_key=os.environ["PROMPTGUARD_API_KEY"])
+
 import re
 import random
 import logging
